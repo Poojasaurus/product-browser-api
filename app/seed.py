@@ -36,7 +36,7 @@ categories = [
 session = SessionLocal()
 
 BATCH_SIZE = 5000
-TOTAL_PRODUCTS = 200000
+TOTAL_PRODUCTS = 35000
 
 try:
 
@@ -62,7 +62,7 @@ try:
 
         print(f"Inserted {batch_start + BATCH_SIZE} products")
 
-    print("Finished inserting 200000 products!")
+    print("Finished inserting 35000 products!")
 
 except Exception as e:
 
