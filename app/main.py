@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, HTTPException
+from datetime import datetime
 from sqlalchemy import desc
 from sqlalchemy.orm import sessionmaker
 
@@ -52,8 +53,10 @@ def get_products(
             )
 
         if cursor:
+            cursor_dt = datetime.fromisoformat(cursor)
+
             query = query.filter(
-                Product.created_at < cursor
+                Product.created_at < cursor_dt
             )
 
         products = (
@@ -101,9 +104,10 @@ def get_product(product_id: str):
         ).first()
 
         if not product:
-            return {
-                "error": "Product not found"
-            }
+            raise HTTPException(
+                status_code=404,
+                detail="Product not found"
+            )
 
         return {
             "id": str(product.id),
